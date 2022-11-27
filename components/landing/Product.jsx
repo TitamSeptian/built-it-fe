@@ -5,7 +5,7 @@ import ProductImage from '../../public/product.png'
 export default function Product() {
     return (
         <div>
-            <Container maxW={"1268px"} mt={10}>
+            <Container maxW={"container.xl"} mt={10}>
                 <Heading my={10}>Cari Apa yang kamu butuhkan !</Heading>
                 <Grid templateColumns={{
                     base: "repeat(2, 1fr)",

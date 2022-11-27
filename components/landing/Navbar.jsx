@@ -29,7 +29,7 @@ export default function WithSubnavigation() {
     
     return (
         <div>
-            <Container maxW={"1268px"}>
+            <Container maxW={"container.xl"}>
                 <Box>
                     <Flex
                         // bg={useColorModeValue("white", "gray.800")}
@@ -288,7 +288,7 @@ const NAV_ITEMS = [
         href: "#",
     },
     {
-        label: "Bahan",
+        label: "Bahan Bangunan",
         href: "#",
     },
     // {

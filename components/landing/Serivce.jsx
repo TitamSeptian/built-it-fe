@@ -6,7 +6,7 @@ export default function Service() {
     return (
         <div>
             <Container
-                maxW={"1268px"}
+                maxW={"container.xl"}
                 // bgColor={"mywood.main"}
                 // padding={"8"}
                 borderRadius={"lg"}

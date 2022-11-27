@@ -40,7 +40,7 @@ export default function FaqSection() {
     ]
     return (
         <div>
-            <Container maxW={"1268px"} my={"10"} >
+            <Container maxW={"container.xl"} my={"10"} >
                 <Center my={'10'}>
                     <Heading as="h1" size="xl">
 

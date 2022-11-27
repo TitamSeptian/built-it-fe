@@ -13,7 +13,7 @@ import logo200 from "../../public/logo/logo200.png";
 export default function HeroAbout() {
     return (
         <div>
-            <Container maxW={"1268px"}>
+            <Container maxW={"container.xl"}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 min-h-[400px]">
                     <VStack alignItems={"left"} justifyContent={"center"}>
                         <Heading size={"2xl"} textColor={"myorange.main"}>

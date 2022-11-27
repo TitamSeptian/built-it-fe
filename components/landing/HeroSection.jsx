@@ -3,7 +3,7 @@ import { Box, Heading, Container, Text, Button } from "@chakra-ui/react";
 export default function HeroSection() {
     return (
         <div>
-            <Container maxW={"1268px"}>
+            <Container maxW={"container.xl"}>
                 <Box
                     bgColor={"mygray.main"}
                     display={"flex"}
