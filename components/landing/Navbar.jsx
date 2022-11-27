@@ -281,7 +281,7 @@ const NAV_ITEMS = [
     },
     {
         label: "Toko",
-        href: "#",
+        href: "/store",
     },
     {
         label: "Tentang",

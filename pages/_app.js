@@ -4,10 +4,16 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "@fontsource/inter";
 import theme from "../styles/theme/theme";
 import theme2 from "../styles/theme";
+// import {router} from "next/client";
+import {useRouter} from "next/router";
+import DashboardLayout from '../components/dashboard/Layout';
+import MainLayout from '../components/landing/Layout';
 
 function MyApp({ Component, pageProps }) {
-    return (
-        <>
+    const router = useRouter();
+    const { pathname } = router;
+    const ThisIsHead = () => {
+        return(
             <Head>
                 <meta
                     name="viewport"
@@ -16,11 +22,32 @@ function MyApp({ Component, pageProps }) {
                 <link rel="icon" href="/favicon.ico" />
                 <title>Build it</title>
             </Head>
-            <ChakraProvider theme={theme}>
-                <Component {...pageProps} />
-            </ChakraProvider>
-        </>
-    );
+        )
+    }
+    if(pathname.startsWith('/dashboard')){
+        return (
+            <>
+                <ThisIsHead/>
+                <ChakraProvider theme={theme}>
+                    <DashboardLayout>
+                        <Component {...pageProps} />
+                    </DashboardLayout>
+                </ChakraProvider>
+            </>
+        );
+    }else{
+        return (
+            <>
+                <ThisIsHead/>
+                <ChakraProvider theme={theme}>
+                    <MainLayout>
+                        <Component {...pageProps} />
+                    </MainLayout>
+                </ChakraProvider>
+            </>
+        );
+    }
+    
 }
 
 export default MyApp;
