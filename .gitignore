@@ -36,3 +36,11 @@ yarn-error.log*
 next-env.d.ts
 
 /.idea
+/.fleet
+.env
+.env.local
+.env.development
+.env.development.local
+
+.env.production.local
+.env.production

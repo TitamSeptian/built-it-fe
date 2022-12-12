@@ -3,7 +3,6 @@ import {
     Center,
     Container, Grid, GridItem, Heading
 } from "@chakra-ui/react";
-import toRupiah from "@develoka/angka-rupiah-js";
 import StoreItem from '../../components/landing/StoreItem';
 const Store = () => {
     const StoreLists = [

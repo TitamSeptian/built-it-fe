@@ -29,24 +29,28 @@ import {
     FiMenu,
     FiBell,
     FiChevronDown,
+    FiUser,
+    FiBook
 } from 'react-icons/fi';
+import {BiCart} from "react-icons/bi";
 import logo48 from '../../public/logo/logo48x48.png'
 import Image from "next/image";
 import {ColorModeSwitcher} from "../ColorModeSwitcher";
-
+import Link2 from 'next/link'
 
 const LinkItems = [
-    {name: 'Home', icon: FiHome},
-    {name: 'Trending', icon: FiTrendingUp},
-    {name: 'Explore', icon: FiCompass},
-    {name: 'Favourites', icon: FiStar},
-    {name: 'Settings', icon: FiSettings},
+    {name: 'Home', icon: FiHome, url: "/dashboard"},
+    {name: 'Product', icon: FiTrendingUp, url: '/dashboard/products'},
+    {name: 'Seller', icon: FiCompass, url: '#'},
+    {name: 'Transaction', icon: FiBook, url: '#'},
+    {name: 'Users', icon: FiUser, url: '#'},
 ];
 
-export default function SidebarWithHeader({children,},) {
+    const baseUri = '/dashboard';
+export default function Layout({children,},) {
     const {isOpen, onOpen, onClose} = useDisclosure();
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.700')}>
             <SidebarContent
                 onClose={() => onClose}
                 display={{base: 'none', md: 'block'}}
@@ -76,7 +80,7 @@ const SidebarContent = ({onClose, ...rest}) => {
     return (
         <Box
             transition="3s ease"
-            bg={useColorModeValue('white', 'gray.900')}
+            bg={useColorModeValue('white', 'gray.700')}
             borderRight="1px"
             borderRightColor={useColorModeValue('gray.200', 'gray.700')}
             w={{base: 'full', md: 60}}
@@ -88,7 +92,7 @@ const SidebarContent = ({onClose, ...rest}) => {
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
             {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
+                <NavItem key={link.name} icon={link.icon} url={link.url}>
                     {link.name}
                 </NavItem>
             ))}
@@ -97,9 +101,9 @@ const SidebarContent = ({onClose, ...rest}) => {
 };
 
 
-const NavItem = ({icon, children, ...rest}) => {
+const NavItem = ({icon, url, children, ...rest}) => {
     return (
-        <Link href="#" style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
+        <Link2 href={url} style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
             <Flex
                 align="center"
                 p="4"
@@ -108,6 +112,7 @@ const NavItem = ({icon, children, ...rest}) => {
                 role="group"
                 cursor="pointer"
                 _hover={{
+                    transition: '0.2s',
                     bg: 'myorange.400',
                     color: 'white',
                 }}
@@ -124,8 +129,9 @@ const NavItem = ({icon, children, ...rest}) => {
                 )}
                 {children}
             </Flex>
-        </Link>
-    );
+        </Link2>
+    )
+        ;
 };
 
 const MobileNav = ({onOpen, ...rest}) => {
@@ -135,7 +141,7 @@ const MobileNav = ({onOpen, ...rest}) => {
             px={{base: 4, md: 4}}
             height="20"
             alignItems="center"
-            bg={useColorModeValue('white', 'gray.900')}
+            bg={useColorModeValue('white', 'gray.700')}
             borderBottomWidth="1px"
             borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
             justifyContent={{base: 'space-between', md: 'flex-end'}}
@@ -157,7 +163,10 @@ const MobileNav = ({onOpen, ...rest}) => {
             </Text>
 
             <HStack spacing={{base: '0', md: '6'}}>
-                <ColorModeSwitcher />
+                <Link2 href={baseUri + '/cart'} >
+                <IconButton aria-label={"cart"} icon={<BiCart/>}/>
+                </Link2>
+                <ColorModeSwitcher/>
                 <Flex alignItems={'center'}>
                     <Menu>
                         <MenuButton
@@ -187,11 +196,9 @@ const MobileNav = ({onOpen, ...rest}) => {
                             </HStack>
                         </MenuButton>
                         <MenuList
-                            bg={useColorModeValue('white', 'gray.900')}
+                            bg={useColorModeValue('white', 'gray.700')}
                             borderColor={useColorModeValue('gray.200', 'gray.700')}>
                             <MenuItem>Profile</MenuItem>
-                            <MenuItem>Settings</MenuItem>
-                            <MenuItem>Billing</MenuItem>
                             <MenuDivider/>
                             <MenuItem>Sign out</MenuItem>
                         </MenuList>

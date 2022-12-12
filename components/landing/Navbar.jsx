@@ -285,7 +285,7 @@ const NAV_ITEMS = [
     },
     {
         label: "Tentang",
-        href: "#",
+        href: "/about",
     },
     {
         label: "Bahan Bangunan",
