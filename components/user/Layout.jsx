@@ -38,8 +38,8 @@ import { ColorModeSwitcher } from "../ColorModeSwitcher";
 const baseUri = "/user";
 const LinkItems = [
     { name: "Profile", icon: FiHome, url: baseUri + "/" },
-    { name: "Pesanan Mu", icon: FiTrendingUp, url: baseUri + "/pesanan" },
-    { name: "Keranjang", icon: BiCart, url: baseUri + "/keranjang" },
+    { name: "Pesanan Mu", icon: FiTrendingUp, url: baseUri + "/order" },
+    { name: "Keranjang", icon: BiCart, url: baseUri + "/cart" },
 ];
 const MobileNav = ({ onOpen, ...rest }) => {
     return (
