@@ -44,7 +44,7 @@ const Store = () => {
                     {products.map((product) => (
                         <GridItem key={product.id}>
                             <ProductItem
-                                title={product.name}
+                                title={product.brand}
                                 image={product.image}
                                 price={product.price}
                                 storeName={product.store.name}

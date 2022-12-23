@@ -40,6 +40,7 @@ const LinkItems = [
     { name: "Profile", icon: FiHome, url: baseUri + "/" },
     { name: "Pesanan Mu", icon: FiTrendingUp, url: baseUri + "/order" },
     { name: "Keranjang", icon: BiCart, url: baseUri + "/cart" },
+    { name: "Alamat", icon: FiCompass, url: baseUri + "/address" },
 ];
 const MobileNav = ({ onOpen, ...rest }) => {
     return (
