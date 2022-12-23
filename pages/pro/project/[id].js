@@ -11,7 +11,10 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 export default function Project() {
+    const router = useRouter();
+    const { id } = router.query;
     const [form, setForm] = useState({});
     const handleForm = (name, value) => {
         setForm({ ...form, [name]: value });
@@ -30,7 +33,7 @@ export default function Project() {
                 mt={2}
                 px={"4"}
             >
-                <Heading size={"md"}>Tambah Project</Heading>
+                <Heading size={"md"}>Edit Project {id}</Heading>
                 <Link href={"/pro/project"}>
                     <Button
                         variant={"outline"}
