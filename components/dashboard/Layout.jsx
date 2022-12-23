@@ -46,7 +46,7 @@ const LinkItems = [
     {name: 'Users', icon: FiUser, url: '#'},
 ];
 
-    const baseUri = '/dashboard';
+const baseUri = '/dashboard';
 export default function Layout({children,},) {
     const {isOpen, onOpen, onClose} = useDisclosure();
     return (
@@ -163,8 +163,8 @@ const MobileNav = ({onOpen, ...rest}) => {
             </Text>
 
             <HStack spacing={{base: '0', md: '6'}}>
-                <Link2 href={baseUri + '/cart'} >
-                <IconButton aria-label={"cart"} icon={<BiCart/>}/>
+                <Link2 href={baseUri + '/cart'}>
+                    <IconButton aria-label={"cart"} icon={<BiCart/>}/>
                 </Link2>
                 <ColorModeSwitcher/>
                 <Flex alignItems={'center'}>
