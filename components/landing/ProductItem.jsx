@@ -6,12 +6,20 @@ import {
     Box,
     HStack,
     Avatar,
-    Image
+    Image,
 } from "@chakra-ui/react";
 import ProductImage from "../../public/product.png";
 import toRupiah from "@develoka/angka-rupiah-js";
+import Link from "next/link";
 
-export default function ProductItem({ image, title, price, info, storeName }) {
+export default function ProductItem({
+    image,
+    title,
+    price,
+    info,
+    storeName,
+    primary,
+}) {
     // image = ProductImage;
     return (
         <div>
@@ -61,9 +69,11 @@ export default function ProductItem({ image, title, price, info, storeName }) {
                     />
                     <Text fontSize={"xs"}>{storeName}</Text>
                 </HStack>
-                <Button colorScheme={"myorange"} variant={"solid"}>
-                    Lihat
-                </Button>
+                <Link href={"/product/" + primary}>
+                    <Button colorScheme={"myorange"} variant={"solid"}>
+                        Lihat
+                    </Button>
+                </Link>
             </VStack>
         </div>
     );

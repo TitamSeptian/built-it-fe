@@ -49,6 +49,7 @@ const Store = () => {
                                 price={product.price}
                                 storeName={product.store.name}
                                 info={product.description}
+                                primary={product.id}
                             >
                                 {}
                             </ProductItem>
