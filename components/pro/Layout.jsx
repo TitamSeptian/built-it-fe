@@ -35,7 +35,7 @@ import logo48 from "../../public/logo/logo48x48.png";
 import Link2 from "next/link";
 import { BiCart } from "react-icons/bi";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
-const baseUri = "/pro";
+const baseUri = "/jago";
 const LinkItems = [
     { name: "Profile", icon: FiHome, url: baseUri + "/" },
     { name: "Log Project", icon: FiTrendingUp, url: baseUri + "/project" },

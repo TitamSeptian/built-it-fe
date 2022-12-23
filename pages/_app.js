@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }) {
             </>
         );
     }
-    if (pathname.startsWith("/pro")) {
+    if (pathname.startsWith("/jago")) {
         return (
             <>
                 <TheDefault />

@@ -41,7 +41,7 @@ export default function project() {
                 px={"4"}
             >
                 <Heading size={"md"}>Log Project</Heading>
-                <Link href={"/pro/project/create"}>
+                <Link href={"/jago/project/create"}>
                     <Button
                         variant={"outline"}
                         size="sm"
@@ -66,7 +66,7 @@ export default function project() {
                     <Heading size={"md"}>{project.name}</Heading>
                     <Text fontSize={"sm"}>{project.project}</Text>
                     <HStack alignSelf={"end"}>
-                        <Link href={`/pro/project/${project.id}`}>
+                        <Link href={`/jago/project/${project.id}`}>
                             <Button
                                 variant={"ghost"}
                                 size="sm"
