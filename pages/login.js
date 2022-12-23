@@ -1,45 +1,166 @@
-import Layout from "../components/auth/Layout";
-import {Box, Heading, Text, VStack, FormControl, FormLabel, Input, FormHelperText, Button} from "@chakra-ui/react";
-import logo from '../public/logo/logo200.png';
+import {
+    Box,
+    Heading,
+    Text,
+    VStack,
+    FormControl,
+    FormLabel,
+    Input,
+    Button,
+    useToast,
+} from "@chakra-ui/react";
+import FormData from "form-data";
+import logo from "../public/logo/logo200.png";
 import Image from "next/image";
-import {FaArrowRight} from "react-icons/fa";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const Layout = dynamic(() => import("../components/auth/Layout"), {
+    ssr: false,
+});
+import axios from "axios";
+import { useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export default function Login() {
+    const toast = useToast();
+    const router = useRouter();
+    function thisIsToast(type = "info", title = "info", message) {
+        const statuses = ["success", "error", "warning", "info"];
+        toast({
+            title: title,
+            description: message,
+            status: type,
+            duration: 4000,
+            isClosable: true,
+        });
+    }
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState([]);
+    const formData = new FormData();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            formData.append("email", email);
+            formData.append("password", password);
+            const res = await axios.post(`/api/auth/login`, {
+                email: email,
+                password: password,
+                formData: formData,
+            });
+            const result = await res.data.data;
+            thisIsToast("success", "Success", result.message);
+            if (result.status) {
+                // second to hour
+                const expire_in = result.data.expires_in / 60;
+                Cookies.set("access_token", result.data.access_token, {
+                    expires: expire_in,
+                });
+                Cookies.set("role", result.data.user.role, {
+                    expires: expire_in,
+                });
+                router.push("/dashboard");
+                // console.log(result.data);
+            }
+        } catch (error) {
+            console.log(error);
+            switch (error.response.status) {
+                case 422:
+                    thisIsToast(
+                        "error",
+                        "Inputan Salah",
+                        error.response.data.error
+                    );
+                    // add error to state
+                    setErrors(error.response.data.error);
+                    console.log(error.response.data.error);
+                    break;
+                case 500:
+                    thisIsToast(
+                        "error",
+                        "Terjadi Kesalahan",
+                        error.response.data.message
+                    );
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     return (
         <div>
             <Layout>
                 <div className={"flex justify-center items-center h-screen"}>
-                    <Box boxShadow={{base: 'none', md: "2xl"}} w={"600px"} borderRadius={"2xl"}>
-                        <VStack align={"start"} px={"50px"} py={"38"} spacing={"7"}>
-                            <Link href={'/'}>
-                                <Image src={logo} alt={"logo"} height={"50"} width={"50"}/>
-                            </Link>
-                            <Text color={"mygray.700"}>Welcome </Text>
-                            <Heading fontWeight={"bold"} size={"2xl"}>Sign In</Heading>
-                            <FormControl>
-                                <FormLabel>Email</FormLabel>
-                                <Input type='email' colorScheme={"myorange"} placeholder={"Emaill Address"}
-                                       isRequimyorange variant={"filled"}/>
-                            </FormControl>
-                            <FormControl>
-                                <FormLabel>Password</FormLabel>
-                                <Input type='password' colorScheme={"myorange"} placeholder={"Password"} isRequired
-                                       variant={"filled"}/>
-                            </FormControl>
-                            <Button colorScheme={"myorange"}>Sign In <FaArrowRight display={{display: 'inherit',}}
-                                                                                   styles={{marginLeft: '10px'}}/></Button>
-                            <Text display={"flex"} gap={"10px"}>I don’t have an account ?
-                                <Text colorScheme={"myorange"}
-                                      color={"myorange.500"}
-                                      fontWeight={"bold"}>
-                                    <Link href={"/register"}>Sign Up</Link>
+                    <form onSubmit={handleSubmit}>
+                        <Box
+                            boxShadow={{ base: "none", md: "2xl" }}
+                            w={"600px"}
+                            borderRadius={"2xl"}
+                        >
+                            <VStack
+                                align={"start"}
+                                px={"50px"}
+                                py={"38"}
+                                spacing={"7"}
+                            >
+                                <Link href={"/"}>
+                                    <Image
+                                        src={logo}
+                                        alt={"logo"}
+                                        height={"50"}
+                                        width={"50"}
+                                    />
+                                </Link>
+                                <Text color={"mygray.700"}>Welcome </Text>
+                                <Heading fontWeight={"bold"} size={"2xl"}>
+                                    Sign In
+                                </Heading>
+                                <FormControl>
+                                    <FormLabel>Email</FormLabel>
+                                    <Input
+                                        type="email"
+                                        colorScheme={"myorange"}
+                                        placeholder={"Emaill Address"}
+                                        isRequired
+                                        variant={"filled"}
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                    />
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Password</FormLabel>
+                                    <Input
+                                        type="password"
+                                        colorScheme={"myorange"}
+                                        placeholder={"Password"}
+                                        isRequired
+                                        variant={"filled"}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                    />
+                                </FormControl>
+                                <Button colorScheme={"myorange"} type="submit">
+                                    Sign In
+                                </Button>
+                                <Text display={"flex"} gap={"10px"}>
+                                    I don’t have an account ?
+                                    <Text
+                                        colorScheme={"myorange"}
+                                        color={"myorange.500"}
+                                        fontWeight={"bold"}
+                                    >
+                                        <Link href={"/register"}>Sign Up</Link>
+                                    </Text>
                                 </Text>
-                            </Text>
-                        </VStack>
-                    </Box>
+                            </VStack>
+                        </Box>
+                    </form>
                 </div>
             </Layout>
         </div>
-    )
+    );
 }
