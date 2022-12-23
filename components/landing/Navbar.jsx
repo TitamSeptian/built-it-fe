@@ -18,15 +18,15 @@ import {
 
 import logo48 from "../../public/logo/logo48x48.png";
 
-import {BiMenu, BiMenuAltRight} from "react-icons/bi";
-import {ColorModeSwitcher} from "../ColorModeSwitcher";
+import { BiMenu, BiMenuAltRight } from "react-icons/bi";
+import { ColorModeSwitcher } from "../ColorModeSwitcher";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function WithSubnavigation() {
-    const {isOpen, onToggle} = useDisclosure();
-    const hrefLogin = '/login';
-    
+    const { isOpen, onToggle } = useDisclosure();
+    const hrefLogin = "/login";
+
     return (
         <div>
             <Container maxW={"container.xl"}>
@@ -36,24 +36,24 @@ export default function WithSubnavigation() {
                         bg={useColorModeValue("white", "gray.800")}
                         color={useColorModeValue("gray.600", "white")}
                         minH={"80px"}
-                        py={{base: 2}}
-                        px={{base: 4}}
+                        py={{ base: 2 }}
+                        px={{ base: 4 }}
                         borderColor={useColorModeValue("gray.200", "gray.900")}
                         align={"center"}
                         // bgColor={"gray.900"}
                     >
                         <Flex
-                            flex={{base: 1, md: "auto"}}
-                            ml={{base: -2}}
-                            display={{base: "flex", md: "none"}}
+                            flex={{ base: 1, md: "auto" }}
+                            ml={{ base: -2 }}
+                            display={{ base: "flex", md: "none" }}
                         >
                             <IconButton
                                 onClick={onToggle}
                                 icon={
                                     isOpen ? (
-                                        <BiMenuAltRight w={3} h={3}/>
+                                        <BiMenuAltRight w={3} h={3} />
                                     ) : (
-                                        <BiMenu w={5} h={5}/>
+                                        <BiMenu w={5} h={5} />
                                     )
                                 }
                                 variant={"ghost"}
@@ -61,34 +61,27 @@ export default function WithSubnavigation() {
                             />
                         </Flex>
                         <Flex
-                            flex={{base: 1}}
-                            justify={{base: "center", md: "start"}}
+                            flex={{ base: 1 }}
+                            justify={{ base: "center", md: "start" }}
                         >
-                            {/* <Text
-                            textAlign={useBreakpointValue({
-                                base: "center",
-                                md: "left",
-                            })}
-                            fontFamily={"heading"}
-                            color={useColorModeValue("gray.800", "white")}
-                        >
-                            Logo
-                        </Text> */}
-                            <Image src={logo48} alt="logo"/>
+                            <Image src={logo48} alt="logo" />
 
-                            <Flex display={{base: "none", md: "flex"}} ml={10}>
-                                <DesktopNav/>
+                            <Flex
+                                display={{ base: "none", md: "flex" }}
+                                ml={10}
+                            >
+                                <DesktopNav />
                             </Flex>
                         </Flex>
 
                         <Stack
-                            flex={{base: 1, md: 0}}
-                            justify={"flex-end"} 
+                            flex={{ base: 1, md: 0 }}
+                            justify={"flex-end"}
                             direction={"row"}
                             spacing={6}
                         >
-                            <ColorModeSwitcher/>
-                            <Link href={hrefLogin} passHref  legacyBehavior>
+                            <ColorModeSwitcher />
+                            <Link href={hrefLogin} passHref legacyBehavior>
                                 <Button
                                     as={"a"}
                                     fontSize={"sm"}
@@ -104,7 +97,7 @@ export default function WithSubnavigation() {
                     </Flex>
 
                     <Collapse in={isOpen} animateOpacity>
-                        <MobileNav/>
+                        <MobileNav />
                     </Collapse>
                 </Box>
             </Container>
@@ -130,11 +123,11 @@ const DesktopNav = () => {
                     <Popover trigger={"hover"} placement={"bottom-start"}>
                         <PopoverTrigger>
                             <Flex alignItems={"center"} justifyItems={"center"}>
-                                <Link
-                                    p={2}
-                                    href={navItem.href ?? "#"}
-                                >
-                                    <Button colorScheme={"myorange"} variant={"ghost"}>
+                                <Link p={2} href={navItem.href ?? "#"}>
+                                    <Button
+                                        colorScheme={"myorange"}
+                                        variant={"ghost"}
+                                    >
                                         {navItem.label}
                                     </Button>
                                 </Link>
@@ -166,7 +159,7 @@ const DesktopNav = () => {
     );
 };
 
-const DesktopSubNav = ({label, href, subLabel}) => {
+const DesktopSubNav = ({ label, href, subLabel }) => {
     return (
         <Link
             href={href}
@@ -195,7 +188,7 @@ const DesktopSubNav = ({label, href, subLabel}) => {
                     align={"center"}
                     flex={1}
                 >
-                    <Icon color={""} w={5} h={5} as={BiMenuAltRight}/>
+                    <Icon color={""} w={5} h={5} as={BiMenuAltRight} />
                 </Flex>
             </Stack>
         </Link>
@@ -207,7 +200,7 @@ const MobileNav = () => {
         <Stack
             bg={useColorModeValue("white", "gray.800")}
             p={4}
-            display={{md: "none"}}
+            display={{ md: "none" }}
         >
             {NAV_ITEMS.map((navItem) => (
                 <MobileNavItem key={navItem.label} {...navItem} />
@@ -216,8 +209,8 @@ const MobileNav = () => {
     );
 };
 
-const MobileNavItem = ({label, children, href}) => {
-    const {isOpen, onToggle} = useDisclosure();
+const MobileNavItem = ({ label, children, href }) => {
+    const { isOpen, onToggle } = useDisclosure();
 
     return (
         <Stack spacing={4} onClick={children && onToggle}>
@@ -251,7 +244,7 @@ const MobileNavItem = ({label, children, href}) => {
             <Collapse
                 in={isOpen}
                 animateOpacity
-                style={{marginTop: "0!important"}}
+                style={{ marginTop: "0!important" }}
             >
                 <Stack
                     mt={2}
@@ -289,7 +282,7 @@ const NAV_ITEMS = [
     },
     {
         label: "Bahan Bangunan",
-        href: "#",
+        href: "/product",
     },
     // {
     //     label: "Find Work",

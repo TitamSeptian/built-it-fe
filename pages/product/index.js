@@ -1,32 +1,45 @@
-import { Container, Grid, GridItem, Heading } from "@chakra-ui/react";
-import ProductItem from "./ProductItem";
-import ProductImage from "../../public/product.png";
+import { Center, Container, Grid, GridItem, Heading } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-export default function Product() {
+import ProductItem from "../../components/landing/ProductItem";
+const Store = () => {
     const [products, setProducts] = useState([]);
     useEffect(() => {
         const res = axios
             .get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/product`)
-            .then((res) => {
-                const response = res.data.data;
-                response.slice(Math.max(response.length - 5, 0));
-                setProducts(response);
-            });
+            .then((res) => setProducts(res.data.data));
 
         console.log(products);
     }, []);
     return (
-        <div>
-            <Container maxW={"container.xl"} mt={10}>
-                <Heading my={10}>Cari Apa yang kamu butuhkan !</Heading>
+        <>
+            <Container
+                maxW="container.xl"
+                my={{
+                    base: 4,
+                    md: 8,
+                    lg: 12,
+                }}
+            >
+                <Center
+                    my={{
+                        base: 4,
+                        md: 8,
+                        lg: 12,
+                    }}
+                >
+                    <Heading>Cari Product</Heading>
+                </Center>
                 <Grid
                     templateColumns={{
-                        base: "repeat(2, 1fr)",
+                        base: "repeat(1, 1fr)",
                         md: "repeat(2, 1fr)",
                         lg: "repeat(4, 1fr)",
                     }}
-                    gap={"4"}
+                    gap={"6"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    placeItems={"center"}
                 >
                     {products.map((product) => (
                         <GridItem key={product.id}>
@@ -43,6 +56,7 @@ export default function Product() {
                     ))}
                 </Grid>
             </Container>
-        </div>
+        </>
     );
-}
+};
+export default Store;
