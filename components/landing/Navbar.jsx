@@ -277,12 +277,16 @@ const NAV_ITEMS = [
         href: "/store",
     },
     {
-        label: "Tentang",
-        href: "/about",
-    },
-    {
         label: "Bahan Bangunan",
         href: "/product",
+    },
+    {
+        label: "Professional",
+        href: "/professional",
+    },
+    {
+        label: "Tentang",
+        href: "/about",
     },
     // {
     //     label: "Find Work",
