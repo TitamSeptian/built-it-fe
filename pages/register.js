@@ -19,11 +19,14 @@ import Link from "next/link";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const Layout = dynamic(() => import("../components/auth/Layout"), {
     ssr: false,
 });
 export default function Register() {
+    const router = useRouter();
     const toast = useToast();
     function thisIsToast(type = "info", title = "info", message) {
         const statuses = ["success", "error", "warning", "info"];
@@ -46,8 +49,16 @@ export default function Register() {
     const [errors, setErrors] = useState([]);
     const formData = new FormData();
     useEffect(() => {
-        // console.log(email, password, firstName, lastName, passwordConfirmation, phone, address);
-        console.log(errors);
+        console.log(
+            email,
+            password,
+            firstName,
+            lastName,
+            passwordConfirmation,
+            phone,
+            address
+        );
+        // console.log(errors);
     }, [
         email,
         password,
@@ -67,8 +78,38 @@ export default function Register() {
         formData.append("address", address);
         formData.append("password", password);
         formData.append("password_confirmation", passwordConfirmation);
+
         try {
-            const user = await axios.post(`/api/auth/register`, formData);
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_BACKEND}/api/customers/register`,
+                {
+                    email: email,
+                    full_name: firstName + " " + lastName,
+                    password: password,
+                    password_confirmation: passwordConfirmation,
+                }
+            );
+            const result = await res.data;
+            if (result.status) {
+                thisIsToast("success", "Success", result.message);
+
+                // second to hour
+                const expire_in = result.data.expires_in / 60;
+                console.log(result.data);
+                Cookies.set("access_token", result.data.access_token, {
+                    expires: expire_in,
+                });
+                Cookies.set("role", result.data.user.role, {
+                    expires: expire_in,
+                });
+                if (result.data.user.role == "store") {
+                    router.push("/dashboard");
+                } else if (result.data.user.role == "customers") {
+                    router.push("/user");
+                } else if (result.data.user.role == "professional") {
+                    router.push("/jago");
+                }
+            }
         } catch (error) {
             console.log(error);
             switch (error.response.status) {
@@ -76,11 +117,10 @@ export default function Register() {
                     thisIsToast(
                         "error",
                         "Inputan Salah",
-                        error.response.data.error
+                        error.response.data.message
                     );
                     // add error to state
                     setErrors(error.response.data.error);
-                    console.log(error.response.data.error);
                     break;
                 case 500:
                     thisIsToast(
@@ -102,7 +142,10 @@ export default function Register() {
                     <form onSubmit={handleSubmit}>
                         <Box
                             boxShadow={{ base: "none", md: "2xl" }}
-                            w={"800px"}
+                            w={{
+                                base: "100%",
+                                md: "800px",
+                            }}
                             borderRadius={"2xl"}
                         >
                             <VStack
@@ -177,20 +220,6 @@ export default function Register() {
                                             setPhone(e.target.value)
                                         }
                                         value={phone}
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Address</FormLabel>
-                                    <Textarea
-                                        type="email"
-                                        colorScheme={"myorange"}
-                                        placeholder={"Address"}
-                                        isRequired
-                                        variant={"filled"}
-                                        onChange={(e) =>
-                                            setAddress(e.target.value)
-                                        }
-                                        value={address}
                                     />
                                 </FormControl>
                                 <HStack>

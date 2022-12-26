@@ -16,31 +16,28 @@ import {
     useColorModeValue,
     VStack,
     Container,
-    Heading,
     Icon,
-    Button,
-    SimpleGrid,
 } from "@chakra-ui/react";
-import {
-    FiBook,
-    FiChevronDown,
-    FiCompass,
-    FiHome,
-    FiMenu,
-    FiTrendingUp,
-    FiUser,
-} from "react-icons/fi";
+import { FiChevronDown, FiHome, FiMenu, FiTrendingUp } from "react-icons/fi";
 import Image from "next/image";
 import logo48 from "../../public/logo/logo48x48.png";
 import Link2 from "next/link";
-import { BiCart } from "react-icons/bi";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 const baseUri = "/jago";
 const LinkItems = [
     { name: "Profile", icon: FiHome, url: baseUri + "/" },
     { name: "Log Project", icon: FiTrendingUp, url: baseUri + "/project" },
 ];
 const MobileNav = ({ onOpen, ...rest }) => {
+    const router = useRouter();
+    const handleLogout = () => {
+        Cookies.remove("access_token");
+        Cookies.remove("role");
+        router.push("/");
+    };
     return (
         <Flex
             // ml={{base: 0, md: 60}}
@@ -110,7 +107,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                                 <MenuItem>Profile</MenuItem>
                             </Link2>
                             <MenuDivider />
-                            <MenuItem>Keluar</MenuItem>
+                            <MenuItem onClick={handleLogout}>Keluar</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>
@@ -155,6 +152,16 @@ const SideItem = ({ children, icon, url, ...rest }) => {
     );
 };
 export default function Layout({ children }) {
+    const router = useRouter();
+    useEffect(() => {
+        const token = Cookies.get("access_token");
+        const role = Cookies.get("role");
+        if (!token) router.push("/login");
+        if (role !== "professional") {
+            Cookies.remove("access_token");
+            router.push("/login");
+        }
+    });
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <>

@@ -45,24 +45,33 @@ export default function Login() {
         try {
             formData.append("email", email);
             formData.append("password", password);
-            const res = await axios.post(`/api/auth/login`, {
-                email: email,
-                password: password,
-                formData: formData,
-            });
-            const result = await res.data.data;
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_BACKEND}/api/login`,
+                {
+                    email: email,
+                    password: password,
+                    formData: formData,
+                }
+            );
+            const result = await res.data;
             thisIsToast("success", "Success", result.message);
             if (result.status) {
                 // second to hour
                 const expire_in = result.data.expires_in / 60;
+                console.log(result.data);
                 Cookies.set("access_token", result.data.access_token, {
                     expires: expire_in,
                 });
                 Cookies.set("role", result.data.user.role, {
                     expires: expire_in,
                 });
-                router.push("/dashboard");
-                // console.log(result.data);
+                if (result.data.user.role == "store") {
+                    router.push("/dashboard");
+                } else if (result.data.user.role == "customers") {
+                    router.push("/user");
+                } else if (result.data.user.role == "professional") {
+                    router.push("/jago");
+                }
             }
         } catch (error) {
             console.log(error);
@@ -90,76 +99,75 @@ export default function Login() {
         }
     };
     return (
-        <div>
+        <div className="py-6">
             <Layout>
-                <div className={"flex justify-center items-center h-screen"}>
-                    <form onSubmit={handleSubmit}>
-                        <Box
-                            boxShadow={{ base: "none", md: "2xl" }}
-                            w={"600px"}
-                            borderRadius={"2xl"}
+                <form onSubmit={handleSubmit}>
+                    <Box
+                        boxShadow={{ base: "none", md: "2xl" }}
+                        w={{
+                            base: "100%",
+                            md: "600px",
+                        }}
+                        borderRadius={"2xl"}
+                    >
+                        <VStack
+                            align={"start"}
+                            px={"50px"}
+                            py={"38"}
+                            spacing={"7"}
                         >
-                            <VStack
-                                align={"start"}
-                                px={"50px"}
-                                py={"38"}
-                                spacing={"7"}
-                            >
-                                <Link href={"/"}>
-                                    <Image
-                                        src={logo}
-                                        alt={"logo"}
-                                        height={"50"}
-                                        width={"50"}
-                                    />
-                                </Link>
-                                <Text color={"mygray.700"}>Welcome </Text>
-                                <Heading fontWeight={"bold"} size={"2xl"}>
-                                    Sign In
-                                </Heading>
-                                <FormControl>
-                                    <FormLabel>Email</FormLabel>
-                                    <Input
-                                        type="email"
-                                        colorScheme={"myorange"}
-                                        placeholder={"Emaill Address"}
-                                        isRequired
-                                        variant={"filled"}
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Password</FormLabel>
-                                    <Input
-                                        type="password"
-                                        colorScheme={"myorange"}
-                                        placeholder={"Password"}
-                                        isRequired
-                                        variant={"filled"}
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
-                                    />
-                                </FormControl>
-                                <Button colorScheme={"myorange"} type="submit">
-                                    Sign In
-                                </Button>
-                                <Text display={"flex"} gap={"10px"}>
-                                    I don’t have an account ?
-                                    <Text
-                                        colorScheme={"myorange"}
-                                        color={"myorange.500"}
-                                        fontWeight={"bold"}
-                                    >
-                                        <Link href={"/register"}>Sign Up</Link>
-                                    </Text>
+                            <Link href={"/"}>
+                                <Image
+                                    src={logo}
+                                    alt={"logo"}
+                                    height={"50"}
+                                    width={"50"}
+                                />
+                            </Link>
+                            <Text color={"mygray.700"}>Welcome </Text>
+                            <Heading fontWeight={"bold"} size={"2xl"}>
+                                Sign In
+                            </Heading>
+                            <FormControl>
+                                <FormLabel>Email</FormLabel>
+                                <Input
+                                    type="email"
+                                    colorScheme={"myorange"}
+                                    placeholder={"Emaill Address"}
+                                    isRequired
+                                    variant={"filled"}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Password</FormLabel>
+                                <Input
+                                    type="password"
+                                    colorScheme={"myorange"}
+                                    placeholder={"Password"}
+                                    isRequired
+                                    variant={"filled"}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                />
+                            </FormControl>
+                            <Button colorScheme={"myorange"} type="submit">
+                                Sign In
+                            </Button>
+                            <Text display={"flex"} gap={"10px"}>
+                                I don’t have an account ?
+                                <Text
+                                    colorScheme={"myorange"}
+                                    color={"myorange.500"}
+                                    fontWeight={"bold"}
+                                >
+                                    <Link href={"/register"}>Sign Up</Link>
                                 </Text>
-                            </VStack>
-                        </Box>
-                    </form>
-                </div>
+                            </Text>
+                        </VStack>
+                    </Box>
+                </form>
             </Layout>
         </div>
     );

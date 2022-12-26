@@ -35,6 +35,9 @@ import logo48 from "../../public/logo/logo48x48.png";
 import Link2 from "next/link";
 import { BiCart } from "react-icons/bi";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
 const baseUri = "/user";
 const LinkItems = [
     { name: "Profile", icon: FiHome, url: baseUri + "/" },
@@ -42,7 +45,15 @@ const LinkItems = [
     { name: "Keranjang", icon: BiCart, url: baseUri + "/cart" },
     { name: "Alamat", icon: FiCompass, url: baseUri + "/address" },
 ];
+
 const MobileNav = ({ onOpen, ...rest }) => {
+    const router = useRouter();
+
+    const handleLogout = () => {
+        Cookies.remove("access_token");
+        Cookies.remove("role");
+        router.push("/");
+    };
     return (
         <Flex
             // ml={{base: 0, md: 60}}
@@ -115,7 +126,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                                 <MenuItem>Pesanan Mu</MenuItem>
                             </Link2>
                             <MenuDivider />
-                            <MenuItem>Keluar</MenuItem>
+                            <MenuItem onClick={handleLogout}>Keluar</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>
@@ -160,6 +171,17 @@ const SideItem = ({ children, icon, url, ...rest }) => {
     );
 };
 export default function Layout({ children }) {
+    const router = useRouter();
+    useEffect(() => {
+        const token = Cookies.get("access_token");
+        const role = Cookies.get("role");
+        if (!token) router.push("/login");
+        if (role !== "customers") {
+            Cookies.remove("access_token");
+            router.push("/login");
+        }
+    });
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <>

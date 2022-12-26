@@ -19,6 +19,15 @@ export function unAuthPageStore(ctx) {
         return resolve("unauthorized");
     });
 }
+export function unAuthPageProfessional(ctx) {
+    return new Promise((resolve) => {
+        const allCookies = cookies(ctx);
+        if (allCookies.access_token) {
+            return ctx.res.writeHead(302, { Location: "/jago" }).end();
+        }
+        return resolve("unauthorized");
+    });
+}
 
 export function authPage(ctx) {
     const allCookies = cookies(ctx);
