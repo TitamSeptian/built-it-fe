@@ -34,7 +34,7 @@ export default function ServiceItem({ title, children, icon }) {
                         __html: children,
                     }}
                 ></Text>
-                <Link href={"#"}>
+                {/* <Link href={"#"}>
                     <HStack alignItems={"left"}>
                         <span>learn more</span>
                         <FaArrowRight
@@ -42,7 +42,7 @@ export default function ServiceItem({ title, children, icon }) {
                             style={{ width: "inherit", height: "inherit" }}
                         />
                     </HStack>
-                </Link>
+                </Link> */}
             </VStack>
         </>
     );

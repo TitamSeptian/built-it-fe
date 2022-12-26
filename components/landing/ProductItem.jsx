@@ -7,10 +7,13 @@ import {
     HStack,
     Avatar,
     Image,
+    IconButton,
 } from "@chakra-ui/react";
 import ProductImage from "../../public/product.png";
 import toRupiah from "@develoka/angka-rupiah-js";
 import Link from "next/link";
+import { BiCart } from "react-icons/bi";
+import Cookies from "js-cookie";
 
 export default function ProductItem({
     image,
@@ -20,6 +23,7 @@ export default function ProductItem({
     storeName,
     primary,
 }) {
+    const token = Cookies.get("access_token");
     // image = ProductImage;
     return (
         <div>
@@ -69,11 +73,24 @@ export default function ProductItem({
                     />
                     <Text fontSize={"xs"}>{storeName}</Text>
                 </HStack>
-                <Link href={"/product/" + primary}>
-                    <Button colorScheme={"myorange"} variant={"solid"}>
-                        Lihat
-                    </Button>
-                </Link>
+                <HStack>
+                    <Link href={"/product/" + primary}>
+                        <Button colorScheme={"myorange"} variant={"solid"}>
+                            Lihat
+                        </Button>
+                    </Link>
+                    {/* if no token dont show cart button */}
+                    {!token ? (
+                        <></>
+                    ) : (
+                        <IconButton
+                            colorScheme={"mywood"}
+                            variant={"outline"}
+                            aria-label={"Add to cart"}
+                            icon={<BiCart />}
+                        />
+                    )}
+                </HStack>
             </VStack>
         </div>
     );
