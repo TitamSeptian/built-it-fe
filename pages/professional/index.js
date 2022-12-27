@@ -10,24 +10,6 @@ const Store = () => {
             image: "https://via.placeholder.com/150",
             skill: "Civil Engineering",
         },
-        {
-            id: 2,
-            brand: "Mas Cio",
-            image: "https://via.placeholder.com/150",
-            skill: "Civil Engineering",
-        },
-        {
-            id: 3,
-            brand: "Mas Cio",
-            image: "https://via.placeholder.com/150",
-            skill: "Civil Engineering",
-        },
-        {
-            id: 4,
-            brand: "Mas Cio",
-            image: "https://via.placeholder.com/150",
-            skill: "Civil Engineering",
-        },
     ]);
     // useEffect(() => {
     // const res = axios
@@ -57,7 +39,7 @@ const Store = () => {
                 </Center>
                 <Grid
                     templateColumns={{
-                        base: "repeat(1, 1fr)",
+                        base: "repeat(2, 1fr)",
                         md: "repeat(2, 1fr)",
                         lg: "repeat(4, 1fr)",
                     }}

@@ -9,8 +9,11 @@ import {
     Grid,
     GridItem,
     Badge,
+    IconButton,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { FiPhone } from "react-icons/fi";
 
 export default function Professional() {
     const sampleData = [
@@ -30,7 +33,7 @@ export default function Professional() {
             year: 2003,
             location: "Jakarta",
             status: "Selesai",
-            info: "Hotels",
+            info: "Masjid Atosinnya pak asep",
         },
     ];
     const router = useRouter();
@@ -49,11 +52,24 @@ export default function Professional() {
                     >
                         <Image
                             objectFit={"cover"}
-                            alt={"Mas Cio"}
+                            alt={"Professional Info"}
                             src="https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
                         />
                     </Box>
                     <Heading>Mas Cio</Heading>
+                    <VStack bg={"white"} shadow="md" width={"full"} p="6">
+                        <Heading size={"sm"}>
+                            <Link
+                                target={"_blank"}
+                                href="https://wa.me/0812038123"
+                            >
+                                <HStack>
+                                    <IconButton icon={<FiPhone />} />
+                                    <Text>0812038123</Text>
+                                </HStack>
+                            </Link>
+                        </Heading>
+                    </VStack>
                     <Text>Civil Engineering</Text>
                     <Heading size={"md"} color="gray.400">
                         Log Project

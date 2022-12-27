@@ -9,7 +9,7 @@ const Store = () => {
             .get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/product`)
             .then((res) => setProducts(res.data.data));
 
-        console.log(products);
+        // console.log(result);
     }, []);
     return (
         <>
@@ -32,7 +32,7 @@ const Store = () => {
                 </Center>
                 <Grid
                     templateColumns={{
-                        base: "repeat(1, 1fr)",
+                        base: "repeat(2, 1fr)",
                         md: "repeat(2, 1fr)",
                         lg: "repeat(4, 1fr)",
                     }}
@@ -45,7 +45,7 @@ const Store = () => {
                         <GridItem key={product.id}>
                             <ProductItem
                                 title={product.brand}
-                                image={product.image}
+                                image={product.images[0].image_url}
                                 price={product.price}
                                 storeName={product.store.name}
                                 info={product.description}

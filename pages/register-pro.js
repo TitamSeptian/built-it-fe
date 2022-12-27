@@ -81,7 +81,7 @@ export default function Register() {
 
         try {
             const res = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_BACKEND}/api/customers/register`,
+                `${process.env.NEXT_PUBLIC_API_BACKEND}/api/professionals/register`,
                 {
                     email: email,
                     full_name: firstName + " " + lastName,
@@ -162,7 +162,7 @@ export default function Register() {
                                 />
                                 <Text color={"mygray.700"}>Join With Me </Text>
                                 <Heading fontWeight={"bold"} size={"2xl"}>
-                                    Sign Up
+                                    Sign Up as Professional
                                 </Heading>
                                 <HStack>
                                     <FormControl>

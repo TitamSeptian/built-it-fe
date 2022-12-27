@@ -65,12 +65,16 @@ export default function Login() {
                 Cookies.set("role", result.data.user.role, {
                     expires: expire_in,
                 });
+                // console.log(Cookies.get("role"));
+                // console.log(Cookies.get("access_token"));
                 if (result.data.user.role == "store") {
                     router.push("/dashboard");
-                } else if (result.data.user.role == "customers") {
-                    router.push("/user");
-                } else if (result.data.user.role == "professional") {
+                } else if (result.data.user.role == "professionals") {
+                    alert("pro");
                     router.push("/jago");
+                } else if (result.data.user.role == "customers") {
+                    alert("custom");
+                    router.push("/user");
                 }
             }
         } catch (error) {
@@ -157,14 +161,25 @@ export default function Login() {
                             </Button>
                             <Text display={"flex"} gap={"10px"}>
                                 I don’t have an account ?
+                            </Text>
                                 <Text
                                     colorScheme={"myorange"}
                                     color={"myorange.500"}
                                     fontWeight={"bold"}
                                 >
-                                    <Link href={"/register"}>Sign Up</Link>
+                                    <Link href={"/register"}>
+                                        Sign Up Customer
+                                    </Link>
                                 </Text>
-                            </Text>
+                                <Text
+                                    colorScheme={"myorange"}
+                                    color={"myorange.500"}
+                                    fontWeight={"bold"}
+                                >
+                                    <Link href={"/register-pro"}>
+                                        Sign Up Professionals
+                                    </Link>
+                                </Text>
                         </VStack>
                     </Box>
                 </form>

@@ -1,21 +1,10 @@
-import {
-    VStack,
-    HStack,
-    Heading,
-    Badge,
-    Image,
-    Box,
-    Text,
-    Button,
-    IconButton,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import CartItem from "../../components/user/CartItem";
-import { FaTrash } from "react-icons/fa";
-import axios from "axios";
+import { Button, Heading, useToast, VStack } from "@chakra-ui/react";
 import Cookies from "js-cookie";
-import Link from "next/link";
-export default function Pesanan() {
+import { useState, useEffect } from "react";
+import CartItem from "../../../components/user/CartItem";
+import axios from "axios";
+export default function Checkout() {
+    const toast = useToast();
     const token = Cookies.get("access_token");
     const [data, setData] = useState([]);
     const [carts, setCarts] = useState([]);
@@ -40,12 +29,9 @@ export default function Pesanan() {
         console.log(products);
         console.log(store);
     }, []);
-    // setCarts(data?.carts);
-    // console.log(carts);
     return (
-        <div>
+        <>
             <VStack
-                key={data.id}
                 bg={"white"}
                 borderRadius={"lg"}
                 py={"4"}
@@ -55,6 +41,7 @@ export default function Pesanan() {
                 rowGap={"6"}
                 columnGap={"10"}
             >
+                <Heading size={"md"}>Checkout</Heading>
                 {products.map((cx) => (
                     <div key={cx.id}>
                         <Heading size={"xs"}>{store.name}</Heading>
@@ -67,21 +54,23 @@ export default function Pesanan() {
                         />
                     </div>
                 ))}
-
-                <HStack alignSelf={"end"}>
-                    <IconButton
-                        variant={"outline"}
-                        colorScheme="red"
-                        size={"sm"}
-                        icon={<FaTrash />}
-                    />
-                    <Link href={"/user/checkout/" + data.id}>
-                        <Button size={"sm"} colorScheme="mywood">
-                            <Text fontWeight={"bold"}>Chekcout</Text>
-                        </Button>
-                    </Link>
-                </HStack>
+                <Button
+                    alignSelf={"end"}
+                    size="sm"
+                    colorScheme={"myorange"}
+                    onClick={() => {
+                        toast({
+                            title: "Midtrans belum terhubung",
+                            description: "Silahka tunggu konfirmasi admin",
+                            status: "warning",
+                            duration: 9000,
+                            isClosable: true,
+                        });
+                    }}
+                >
+                    Bayar
+                </Button>
             </VStack>
-        </div>
+        </>
     );
 }

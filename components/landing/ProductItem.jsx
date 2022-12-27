@@ -14,6 +14,7 @@ import toRupiah from "@develoka/angka-rupiah-js";
 import Link from "next/link";
 import { BiCart } from "react-icons/bi";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function ProductItem({
     image,
@@ -24,6 +25,28 @@ export default function ProductItem({
     primary,
 }) {
     const token = Cookies.get("access_token");
+
+    const submitCart = async () => {
+        // const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/cart`, {}`)
+
+        try {
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_BACKEND}/api/cart`,
+                {
+                    product_id: primary,
+                    qty: 1,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    };
     // image = ProductImage;
     return (
         <div>
@@ -67,7 +90,7 @@ export default function ProductItem({
                     <Avatar
                         size={"xs"}
                         src={
-                            image ??
+                            // image ??
                             "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
                         }
                     />
@@ -88,6 +111,7 @@ export default function ProductItem({
                             variant={"outline"}
                             aria-label={"Add to cart"}
                             icon={<BiCart />}
+                            onClick={submitCart}
                         />
                     )}
                 </HStack>
